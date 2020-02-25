@@ -1,0 +1,126 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	font_big: {
+		file: font/font0.fnt,
+	},
+	font_small: {
+		file: font/font1.fnt,
+	},
+	font_medium: {
+		file: font/font2.fnt,
+	}
+},
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0,
+		g: 0,
+		b: 0,
+		a: 1,
+	},
+	cyan: {
+		r: 0,
+		g: 1,
+		b: 0.99166656,
+		a: 1,
+	},
+	dark-cyan: {
+		r: 0,
+		g: 0.39373153,
+		b: 0.4333333,
+		a: 1,
+	},
+	white: {
+		r: 1,
+		g: 1,
+		b: 1,
+		a: 1,
+	},
+},
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	pale-blue: {
+		name: white,
+		color: {
+			r: 0.48342222,
+			g: 0.76367503,
+			b: 0.99333334,
+			a: 1,
+		}
+	},
+	black: {
+		name: white,
+		color: {
+			r: 0,
+			g: 0,
+			b: 0,
+			a: 1,
+		}
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button,
+		down: button_down,
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: button,
+		down: button_down,
+	}
+	close: {
+		up: close,
+		down: close,
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: font_medium,
+		up: button,
+		down: button_down,
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: font_medium,
+	},
+	black: {
+		font: font_medium,
+		fontColor: black,
+	},
+	big: {
+		font: font_big,
+	},
+	small: {
+		font: font_small,
+	},
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: font_medium,
+		up: button,
+		down: button_down,
+	},
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font_small,
+		fontColor: black,
+		background: textfield,
+		cursor: black,
+		selection: pale-blue,
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		hScrollKnob: scroll,
+		vScrollKnob: scroll,
+	},
+},
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: framed,
+		titleFont: font_medium,
+		titleFontColor: black,
+	}
+}
+}

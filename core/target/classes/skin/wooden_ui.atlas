@@ -1,0 +1,83 @@
+
+wooden_ui.png
+size: 4096,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1562, 561
+  size: 658, 871
+  orig: 658, 871
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 2882, 1297
+  size: 342, 135
+  orig: 342, 135
+  offset: 0, 0
+  index: -1
+button_down
+  rotate: false
+  xy: 2, 2
+  size: 342, 135
+  orig: 342, 135
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 705, 181
+  size: 75, 77
+  orig: 75, 77
+  offset: 0, 0
+  index: -1
+framed
+  rotate: false
+  xy: 2222, 561
+  size: 658, 871
+  orig: 658, 871
+  offset: 0, 0
+  index: -1
+inventory_cell
+  rotate: false
+  xy: 1562, 290
+  size: 163, 163
+  orig: 163, 163
+  offset: 0, 0
+  index: -1
+screen
+  rotate: false
+  xy: 2, 260
+  size: 1558, 1172
+  orig: 1558, 1172
+  offset: 0, 0
+  index: -1
+scroll
+  rotate: false
+  xy: 2882, 1097
+  size: 197, 198
+  orig: 197, 198
+  offset: 0, 0
+  index: -1
+textfield
+  rotate: false
+  xy: 2, 139
+  size: 701, 119
+  orig: 701, 119
+  offset: 0, 0
+  index: -1
+title
+  rotate: false
+  xy: 1562, 455
+  size: 490, 104
+  orig: 490, 104
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 2054, 558
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
