@@ -100,6 +100,11 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		up: button,
 		down: button_down,
 	},
+	clear: {
+		font: font_small,
+		up: clear,
+		down: clear,
+	},
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
@@ -122,5 +127,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: font_medium,
 		titleFontColor: black,
 	}
-}
+	context_menu: {
+		background: background,
+		titleFont: font_medium,
+		titleFontColor: black,
+	}
+},
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkbox,
+		checkboxOff: checkbox_off,
+		font: font_medium,
+		fontColor: white,
+	},
+},
 }

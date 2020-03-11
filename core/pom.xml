@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.kumascave.games</groupId>
-		<artifactId>firstgame</artifactId>
+		<artifactId>teeth_of_doom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>firstgame-core</artifactId>
+	<artifactId>teeth_of_doom-core</artifactId>
 	<packaging>jar</packaging>
-	<name>firstgame Core</name>
+	<name>teeth_of_doom Core</name>
 
 	<dependencies>
 		<dependency>
@@ -39,6 +39,22 @@
     		<groupId>de.javakaffee</groupId>
     		<artifactId>kryo-serializers</artifactId>
     		<version>0.45</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.jgoodies</groupId>
+    		<artifactId>jgoodies-common</artifactId>
+    		<version>1.8.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.jgoodies</groupId>
+		    <artifactId>jgoodies-binding</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>4.13</version>
+   		 	<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

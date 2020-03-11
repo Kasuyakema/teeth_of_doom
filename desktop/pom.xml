@@ -5,22 +5,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.kumascave.games</groupId>
-		<artifactId>firstgame</artifactId>
+		<artifactId>teeth_of_doom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>firstgame-desktop</artifactId>
+	<artifactId>teeth_of_doom-desktop</artifactId>
 	<packaging>jar</packaging>
-	<name>firstgame desktop</name>
+	<name>teeth_of_doom desktop</name>
 
 	<properties>
-		<mainClass>com.kumascave.games.firstgame.java.firstgameDesktop</mainClass>
+		<mainClass>com.kumascave.games.teeth_of_doom.java.teeth_of_doomDesktop</mainClass>
 	</properties>
 
 	<dependencies>		
 		<dependency>
 			<groupId>com.kumascave.games</groupId>
-			<artifactId>firstgame-core</artifactId>
+			<artifactId>teeth_of_doom-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -37,12 +37,6 @@
 	</dependencies>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>../assets</directory>
-			</resource>
-		</resources>
-
 		<plugins>
 			<!-- this run the game when you invoke: mvn integration-test -Pdesktop -->
 			<plugin>

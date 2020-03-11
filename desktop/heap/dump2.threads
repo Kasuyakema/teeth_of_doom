@@ -1,0 +1,136 @@
+Thread 0x6d818e868
+
+  locals:
+
+Thread 0x6c77ff640
+  at jdk.internal.misc.Unsafe.park(ZJ)V (Native Method)
+  at java.util.concurrent.locks.LockSupport.park(Ljava/lang/Object;)V (LockSupport.java:194)
+  at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await()V (AbstractQueuedSynchronizer.java:2062)
+  at java.util.concurrent.LinkedBlockingQueue.take()Ljava/lang/Object; (LinkedBlockingQueue.java:435)
+  at java.util.concurrent.ThreadPoolExecutor.getTask()Ljava/lang/Runnable; (ThreadPoolExecutor.java:1092)
+  at java.util.concurrent.ThreadPoolExecutor.runWorker(Ljava/util/concurrent/ThreadPoolExecutor$Worker;)V (ThreadPoolExecutor.java:1152)
+  at java.util.concurrent.ThreadPoolExecutor$Worker.run()V (ThreadPoolExecutor.java:641)
+  at java.lang.Thread.run()V (Thread.java:844)
+
+  locals:
+    objectId=0x6c77ff910, line=1
+    objectId=0x6c77ff640, line=1
+    objectId=0x6c77ff910, line=2
+    objectId=0x6c77ff9a8, line=2
+    objectId=0x6c77ffa40, line=3
+    objectId=0x6c77ffa70, line=3
+    objectId=0x6c77ffa80, line=3
+    objectId=0x6c77ffb28, line=4
+    objectId=0x6c77ffb28, line=5
+    objectId=0x6c77ffb78, line=5
+    objectId=0x6c77ff640, line=5
+    objectId=0x6c77ffb78, line=6
+    objectId=0x6c77ff640, line=7
+
+Thread 0x6c77ffc20
+
+  locals:
+
+Thread 0x6c77ffd98
+  at org.lwjgl.opengl.GL11.nglDrawArrays(IIIJ)V (Native Method)
+  at org.lwjgl.opengl.GL11.glDrawArrays(III)V (GL11.java:1144)
+  at com.badlogic.gdx.backends.lwjgl.LwjglGL20.glDrawArrays(III)V (LwjglGL20.java:276)
+  at com.badlogic.gdx.graphics.Mesh.render(Lcom/badlogic/gdx/graphics/glutils/ShaderProgram;IIIZ)V (Mesh.java:641)
+  at com.badlogic.gdx.graphics.Mesh.render(Lcom/badlogic/gdx/graphics/glutils/ShaderProgram;I)V (Mesh.java:550)
+  at com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20.flush()V (ImmediateModeRenderer20.java:151)
+  at com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20.end()V (ImmediateModeRenderer20.java:160)
+  at com.badlogic.gdx.graphics.glutils.ShapeRenderer.end()V (ShapeRenderer.java:1197)
+  at com.kumascave.games.teeth_of_doom.core.world.TiledLayer.draw(Lcom/badlogic/gdx/graphics/g2d/Batch;F)V (TiledLayer.java:138)
+  at com.badlogic.gdx.scenes.scene2d.Group.drawChildren(Lcom/badlogic/gdx/graphics/g2d/Batch;F)V (Group.java:110)
+  at com.badlogic.gdx.scenes.scene2d.Group.draw(Lcom/badlogic/gdx/graphics/g2d/Batch;F)V (Group.java:57)
+  at com.badlogic.gdx.scenes.scene2d.Stage.draw()V (Stage.java:128)
+  at com.kumascave.games.teeth_of_doom.screens.GameScreen.render(F)V (GameScreen.java:97)
+  at com.badlogic.gdx.Game.render()V (Game.java:46)
+  at com.kumascave.games.teeth_of_doom.FirstGame.render()V (FirstGame.java:23)
+  at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop()V (LwjglApplication.java:233)
+  at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run()V (LwjglApplication.java:128)
+
+  locals:
+    objectId=0x6d9dc4b60, line=3
+    objectId=0x6d9de23f8, line=3
+    objectId=0x6d9de2218, line=5
+    objectId=0x6d9de2090, line=7
+    objectId=0x6c6edfaf8, line=8
+    objectId=0x6c6edfaf8, line=9
+    objectId=0x6c6edfb58, line=9
+    objectId=0x6c71053c8, line=9
+    objectId=0x6c6edfb88, line=10
+    objectId=0x6c6edfaf8, line=10
+    objectId=0x6c6edfbf8, line=11
+    objectId=0x6c6edfaf8, line=11
+    objectId=0x6c7800418, line=15
+    objectId=0x6c7800468, line=15
+    objectId=0x6c77ffd98, line=16
+
+Thread 0x6c78024d8
+  at sun.awt.X11.XToolkit.waitForEvents(J)V (Native Method)
+  at sun.awt.X11.XToolkit.run(Z)V (XToolkit.java:588)
+  at sun.awt.X11.XToolkit.run()V (XToolkit.java:552)
+  at java.lang.Thread.run()V (Thread.java:844)
+
+  locals:
+    objectId=0x6c7802650, line=1
+    objectId=0x6c78026a8, line=1
+    objectId=0x6c7802650, line=2
+    objectId=0x6c78024d8, line=3
+
+Thread 0x6c7802760
+  at java.lang.Object.wait(J)V (Native Method)
+  at java.lang.ref.ReferenceQueue.remove(J)Ljava/lang/ref/Reference; (ReferenceQueue.java:151)
+  at java.lang.ref.ReferenceQueue.remove()Ljava/lang/ref/Reference; (ReferenceQueue.java:172)
+  at sun.java2d.Disposer.run()V (Disposer.java:144)
+  at java.lang.Thread.run()V (Thread.java:844)
+
+  locals:
+    objectId=0x6c78029d8, line=1
+    objectId=0x6c78028d8, line=1
+    objectId=0x6c78029d8, line=2
+    objectId=0x6c7802a88, line=3
+    objectId=0x6c7802760, line=4
+
+Thread 0x6c7802c10
+  at java.lang.Object.wait(J)V (Native Method)
+  at java.lang.ref.ReferenceQueue.remove(J)Ljava/lang/ref/Reference; (ReferenceQueue.java:151)
+  at jdk.internal.ref.CleanerImpl.run()V (CleanerImpl.java:148)
+  at java.lang.Thread.run()V (Thread.java:844)
+  at jdk.internal.misc.InnocuousThread.run()V (InnocuousThread.java:122)
+
+  locals:
+    objectId=0x6c7802da0, line=1
+    objectId=0x6c7802d90, line=1
+    objectId=0x6c7802e38, line=2
+    objectId=0x6c7802c10, line=2
+    objectId=0x6c7802c10, line=2
+    objectId=0x6c7802c10, line=3
+    objectId=0x6c7802c10, line=4
+
+Thread 0x6c780f158
+
+  locals:
+
+Thread 0x6c780f2d0
+  at java.lang.Object.wait(J)V (Native Method)
+  at java.lang.ref.ReferenceQueue.remove(J)Ljava/lang/ref/Reference; (ReferenceQueue.java:151)
+  at java.lang.ref.ReferenceQueue.remove()Ljava/lang/ref/Reference; (ReferenceQueue.java:172)
+  at java.lang.ref.Finalizer$FinalizerThread.run()V (Finalizer.java:216)
+
+  locals:
+    objectId=0x6c780f460, line=1
+    objectId=0x6c780f450, line=1
+    objectId=0x6c780f2d0, line=3
+    objectId=0x6c780f4f0, line=3
+
+Thread 0x6c7802ef8
+  at java.lang.ref.Reference.waitForReferencePendingList()V (Native Method)
+  at java.lang.ref.Reference.processPendingReferences()V (Reference.java:174)
+  at java.lang.ref.Reference.access$000()V (Reference.java:44)
+  at java.lang.ref.Reference$ReferenceHandler.run()V (Reference.java:138)
+
+  locals:
+    objectId=0x6c7802ef8, line=3
+

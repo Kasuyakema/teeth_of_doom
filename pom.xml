@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kumascave.games</groupId>
-	<artifactId>firstgame</artifactId>
+	<artifactId>teeth_of_doom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>firstgame Parent</name>
+	<name>teeth_of_doom Parent</name>
 
 	<properties>
 		<android.version>4.1.1.4</android.version>
@@ -107,6 +107,12 @@
 			<classifier>natives-desktop</classifier>
 			<version>${gdx.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-ai</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		
 	</dependencies>
 
 	<repositories>
