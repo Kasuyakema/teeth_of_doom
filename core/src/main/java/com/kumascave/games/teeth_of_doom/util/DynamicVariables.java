@@ -12,4 +12,6 @@ public abstract class DynamicVariables {
 	public static VHolder<Boolean> collisionOverlay = new VHolder<>(false);
 	public static VHolder<Boolean> gridOverlay = new VHolder<>(false);
 	public static VHolder<Boolean> navigationOverlay = new VHolder<>(false);
+
+	public static VHolder<Boolean> pause = new VHolder<>(false);
 }

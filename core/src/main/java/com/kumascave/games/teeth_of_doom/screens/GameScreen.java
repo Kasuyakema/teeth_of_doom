@@ -89,7 +89,9 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		GameContext.getGameStage().act();
+		if (!DynamicVariables.pause.getValue()) {
+			GameContext.getGameStage().act();
+		}
 		GameContext.getHudStage().act();
 		GameContext.getGameStage().draw();
 		if (DynamicVariables.debugWorld.getValue()) {
@@ -99,7 +101,9 @@ public class GameScreen implements Screen {
 			System.out.println("Mouse at: " + GameContext.getMousePosition());
 		}
 		GameContext.getHudStage().draw();
-		WorldUtil.worldStep();
+		if (!DynamicVariables.pause.getValue()) {
+			WorldUtil.worldStep();
+		}
 	}
 
 	@Override

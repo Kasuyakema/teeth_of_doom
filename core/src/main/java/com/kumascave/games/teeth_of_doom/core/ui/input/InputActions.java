@@ -10,6 +10,7 @@ import com.kumascave.games.teeth_of_doom.ConfigKey;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
 import com.kumascave.games.teeth_of_doom.core.ui.actors.windows.DynamicVariableWindow;
 import com.kumascave.games.teeth_of_doom.core.ui.actors.windows.InventoryWindow;
+import com.kumascave.games.teeth_of_doom.util.DynamicVariables;
 
 import lombok.Getter;
 
@@ -58,6 +59,8 @@ public class InputActions {
 			dynamicVarWindow.requestFocus();
 		});
 		result.put(ConfigKey.KEYBIND_INVENTORY, () -> InventoryWindow.toggle());
+
+		result.put(ConfigKey.KEYBIND_PAUSE, () -> DynamicVariables.pause.setValue(!DynamicVariables.pause.getValue()));
 
 		return result;
 	}

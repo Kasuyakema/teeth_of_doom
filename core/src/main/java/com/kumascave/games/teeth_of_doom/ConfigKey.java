@@ -42,6 +42,9 @@ public enum ConfigKey {
 
 	KEYBIND_USE(Keys.F),
 
+	// multiple Keybinds? Keyboard Pause-Button?
+	KEYBIND_PAUSE(Keys.P),
+
 	KEYBIND_INVENTORY(Keys.I),
 
 	WORLD_CHUNK_LOOKAHEAD(2),
