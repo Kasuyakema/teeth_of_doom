@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.kumascave.games.teeth_of_doom.AppContext;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
-import com.kumascave.games.teeth_of_doom.core.entity.Mother;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Stone;
 import com.kumascave.games.teeth_of_doom.core.entity.item.weapon.Bow;
 import com.kumascave.games.teeth_of_doom.core.entity.item.weapon.PegLeg;
@@ -25,10 +24,14 @@ import com.kumascave.games.teeth_of_doom.core.physics.Pose;
 import com.kumascave.games.teeth_of_doom.core.physics.WorldUtil;
 import com.kumascave.games.teeth_of_doom.util.DynamicVariables;
 
+import lombok.Getter;
+
 public class GameScreen implements Screen {
 
-	public GameScreen() {
+	@Getter
+	private boolean disposing = false;
 
+	public GameScreen() {
 		String dirName = "/home/kuma/workspace/main/teeth_of_doom/core/src/main/resources/assets";
 		try {
 			Files.list(new File(dirName).toPath()).forEach(path -> {
@@ -68,11 +71,11 @@ public class GameScreen implements Screen {
 		new Stone(new Pose(1.5f, 3, 1)).addToWorld();
 		new Stone(new Pose(1f, 3, 1)).addToWorld();
 		new Stone(new Pose(0.5f, 3, 1)).addToWorld();
-		GameContext.getGameStage()
-				.addAction(new Spawnpoint<Creep>(10.0f, () -> new Creep(new Pose(-22.0f, 0.0f, 0.0f), 0.6f)));
-
-		new Mother(new Pose(0f, 0f, 0)).addToWorld();
-
+		Spawnpoint<Creep> spawnpoint = new Spawnpoint<Creep>(6.0f, () -> new Creep(new Pose(-22.0f, 0.0f, 0.0f), 0.6f),
+				0.5f);
+		GameContext.getGameStage().addAction(spawnpoint);
+		// GameContext.getGameStage().addAction(new DelayedAction(3.0f, () ->
+		// spawnpoint.setDestroy(true)));
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		DynamicVariables.debugStage
@@ -87,12 +90,19 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if (!DynamicVariables.pause.getValue()) {
 			GameContext.getGameStage().act();
+			if (disposing) {
+				return;
+			}
 		}
 		GameContext.getHudStage().act();
+		if (disposing) {
+			return;
+		}
 		GameContext.getGameStage().draw();
 		if (DynamicVariables.debugWorld.getValue()) {
 			WorldUtil.render();
@@ -128,7 +138,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		GameContext.inst().dispose();
+		disposing = true;
 	}
 
 }

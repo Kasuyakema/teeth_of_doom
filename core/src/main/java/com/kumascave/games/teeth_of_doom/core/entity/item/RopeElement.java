@@ -17,8 +17,7 @@ public class RopeElement extends Entity {
 	public RopeElement(Pose odom, Vector2 size, float weight) {
 		super(size, odom, new Rectangle(size.x, size.y), BodyType.DynamicBody,
 				Rectangle.densityFromWeight(weight, size), friction, restitution);
-		fixtureDef.filter.categoryBits = CollisionFilters.GROUND_CATEGORY;
-		fixtureDef.filter.maskBits = CollisionFilters.SMALL_ITEM_MASK;
+		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 	}
 
 	@Override
@@ -30,4 +29,5 @@ public class RopeElement extends Entity {
 	public void instantDispose() {
 		_dispose();
 	}
+
 }

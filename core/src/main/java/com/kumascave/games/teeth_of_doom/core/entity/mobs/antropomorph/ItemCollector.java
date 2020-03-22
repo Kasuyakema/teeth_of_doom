@@ -22,7 +22,7 @@ public class ItemCollector implements ContactResolving {
 		this.owner = owner;
 
 		fixtureDef = new FixtureDef();
-		fixtureDef.shape = new Circle(owner.getWidth() * 0.75f);
+		fixtureDef.shape = new Circle(owner.getComponents().get(0).getWidth() * 0.75f);
 		fixtureDef.isSensor = true;
 		fixtureDef.filter.categoryBits = CollisionFilters.ITEM_COLLECTOR_CATEGORY;
 		fixtureDef.filter.maskBits = CollisionFilters.ITEM_COLLECTOR_MASK;

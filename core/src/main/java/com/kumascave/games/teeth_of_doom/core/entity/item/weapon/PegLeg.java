@@ -40,13 +40,13 @@ public class PegLeg extends MeleeWeapon {
 
 	public PegLeg(Pose odom) {
 		super(actorSize, odom, new Rectangle(size.x, size.y), BodyType.DynamicBody, density, friction, restitution);
-		setDrawable(new TextureRegionDrawable(
+		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("pegleg.png", Texture.class))));
 	}
 
 	@Override
 	protected void stopSwing() {
-		body.setBullet(false);
+		getBody().setBullet(false);
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 		GameContext.inst();
 		WorldUtil.destroyJoint(distJoint);
@@ -63,14 +63,14 @@ public class PegLeg extends MeleeWeapon {
 		}
 
 		unFix();
-		body.setBullet(true);
+		getBody().setBullet(true);
 		setCollisionFilter(CollisionFilters.ALL_CATEGORY, CollisionFilters.WEAPON_MASK,
 				CollisionFilters.BALLGAME_GROUP);
 		Pose pose = getSwingPose();
 		setPositionFull(pose);
 
 		RevoluteJointDef def = new RevoluteJointDef();
-		def.initialize(body, user.getBody(), user.getBody().getWorldCenter());
+		def.initialize(getBody(), user.getBody(), user.getBody().getWorldCenter());
 		def.enableLimit = true;
 		def.upperAngle = swingAngle;
 		def.lowerAngle = -swingAngle;
@@ -81,7 +81,7 @@ public class PegLeg extends MeleeWeapon {
 		revJoint = (RevoluteJoint) WorldUtil.createJoint(def);
 
 		DistanceJointDef defDist = new DistanceJointDef();
-		defDist.initialize(user.getBody(), body, user.getBody().getPosition(), pose.getPos());
+		defDist.initialize(user.getBody(), getBody(), user.getBody().getPosition(), pose.getPos());
 		defDist.frequencyHz = 0;
 		defDist.dampingRatio = 1;
 		GameContext.inst();

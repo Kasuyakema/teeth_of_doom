@@ -21,4 +21,11 @@ public class Damage {
 		setDmg(getDmg() + additionalDmg);
 	}
 
+	public Damage(DmgResolving source, int dmg) {
+		super();
+		this.source = source;
+		this.dmg = dmg;
+		this.worldManifold = null;
+	}
+
 }

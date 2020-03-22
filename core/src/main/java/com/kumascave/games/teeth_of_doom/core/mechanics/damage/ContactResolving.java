@@ -8,4 +8,8 @@ public interface ContactResolving extends HasId {
 		// do nothing
 	}
 
+	public default void resolveContactEnd(ContactResolving contact) {
+		// do nothing
+	}
+
 }

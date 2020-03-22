@@ -23,9 +23,8 @@ public class Stone extends Item {
 	public Stone(Pose startingPose) {
 		super(new Vector2(diam * actorScale, diam * actorScale), startingPose, new Circle(diam), BodyType.DynamicBody,
 				density, friction, restitution);
-		fixtureDef.filter.categoryBits = CollisionFilters.GROUND_CATEGORY;
-		fixtureDef.filter.maskBits = CollisionFilters.SMALL_ITEM_MASK;
-		setDrawable(new TextureRegionDrawable(
+		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
+		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("stone.png", Texture.class))));
 		// float toPx = GameContext.inst().getCameraController().getCamera().project(new
 		// Vector3(1, 0, 0)).x;

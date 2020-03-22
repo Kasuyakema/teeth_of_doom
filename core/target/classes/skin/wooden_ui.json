@@ -55,6 +55,33 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1,
 		}
 	}
+	red: {
+		name: white,
+		color: {
+			r: 1,
+			g: 0,
+			b: 0,
+			a: 1,
+		}
+	}
+	white: {
+		name: white,
+		color: {
+			r: 1,
+			g: 1,
+			b: 1,
+			a: 1,
+		}
+	}
+	clear: {
+		name: clear,
+		color: {
+			r: 1,
+			g: 1,
+			b: 1,
+			a: 1,
+		}
+	}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {

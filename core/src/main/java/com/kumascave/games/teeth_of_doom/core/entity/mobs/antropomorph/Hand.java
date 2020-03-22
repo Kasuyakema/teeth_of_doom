@@ -10,14 +10,16 @@ import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
 import com.kumascave.games.teeth_of_doom.core.ManagedJointReference;
+import com.kumascave.games.teeth_of_doom.core.entity.Entity;
+import com.kumascave.games.teeth_of_doom.core.entity.EntityComponent;
 import com.kumascave.games.teeth_of_doom.core.entity.StateMachine;
 import com.kumascave.games.teeth_of_doom.core.entity.Transition;
 import com.kumascave.games.teeth_of_doom.core.entity.WithStateMachine;
+import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlot;
+import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlotType;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Handheld;
 import com.kumascave.games.teeth_of_doom.core.entity.item.HandheldState;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Item;
-import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlot;
-import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlotType;
 import com.kumascave.games.teeth_of_doom.core.physics.PhysicalEntity;
 import com.kumascave.games.teeth_of_doom.core.physics.WorldUtil;
 
@@ -88,23 +90,26 @@ public class Hand implements WithStateMachine<Hand> {
 			return;
 		}
 		GameContext.inst();
-		Actor target = GameContext.getGameStage().hit(pos.x, pos.y, false);
-		if (owner.equals(target)) {
-			// Dont touch yourself ;)
-			return;
-		}
-		if (target instanceof Handheld) {
-			owner.equip(equipmentSlotFromHandType(type), (Handheld) target);
-			// stateSwitch -> equipped via listener
-			return;
-		}
-		if (target instanceof Item) {
-			owner.addToInventory((Item) target);
-			return;
-		}
-		if (target instanceof PhysicalEntity) {
-			switchState(HandState.GRABBED, pos, target);
-			return;
+		Actor actor = GameContext.getGameStage().hit(pos.x, pos.y, true);
+		if (actor instanceof EntityComponent) {
+			Entity target = ((EntityComponent) actor).getOwner();
+			if (owner.equals(target)) {
+				// Dont touch yourself ;)
+				return;
+			}
+			if (target instanceof Handheld) {
+				owner.equip(equipmentSlotFromHandType(type), (Handheld) target);
+				// stateSwitch -> equipped via listener
+				return;
+			}
+			if (target instanceof Item) {
+				owner.addToInventory((Item) target);
+				return;
+			}
+			if (target instanceof PhysicalEntity) {
+				switchState(HandState.GRABBED, pos, target);
+				return;
+			}
 		}
 		return;
 	}

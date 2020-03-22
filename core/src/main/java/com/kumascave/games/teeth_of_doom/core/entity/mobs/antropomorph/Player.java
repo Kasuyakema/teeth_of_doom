@@ -17,7 +17,7 @@ import com.kumascave.games.teeth_of_doom.screens.TitleScreen;
 public class Player extends Human {
 
 	private static float playerDiam = 0.5f;
-	private static Pose startingPose = new Pose(0f, 0f, 0);
+	private static Pose startingPose = new Pose(-2f, 0f, 0);
 	private static Friction friction = new Friction(20f, 0.5f, 0.8f, 0.5f, 0.5f);
 	private static float weight = 80f;
 	private static float density = Circle.densityFromWeight(weight, playerDiam);
@@ -30,7 +30,7 @@ public class Player extends Human {
 		trackSpeed = 2;
 		maxRotateSpeed = 100;
 		setAlignment(Alignment.ALLY);
-		setDrawable(new TextureRegionDrawable(
+		components.get(0).setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("player.png", Texture.class))));
 
 		itemCollector = new ItemCollector(this);
@@ -38,9 +38,8 @@ public class Player extends Human {
 
 	@Override
 	public void act(float deltaT) {
-		GameContext.inst();
-		setTarget(GameContext.getMousePosition());
 		super.act(deltaT);
+		lookAt(GameContext.getMousePosition());
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class Player extends Human {
 	@Override
 	public void addToWorld() {
 		super.addToWorld();
-		itemCollector.addSensor(body);
+		itemCollector.addSensor(getBody());
 	}
 
 	@Override

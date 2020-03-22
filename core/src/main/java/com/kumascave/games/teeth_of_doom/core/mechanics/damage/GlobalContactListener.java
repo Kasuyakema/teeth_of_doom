@@ -1,5 +1,6 @@
 package com.kumascave.games.teeth_of_doom.core.mechanics.damage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -47,7 +48,16 @@ public class GlobalContactListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		return;
+		Object dataA = contact.getFixtureA().getUserData();
+		Object dataB = contact.getFixtureB().getUserData();
+
+		ContactResolving resA = castIfResolving(contact, dataA);
+		ContactResolving resB = castIfResolving(contact, dataB);
+
+		if (resA != null && resB != null) {
+			resA.resolveContactEnd(resB);
+			resB.resolveContactEnd(resA);
+		}
 	}
 
 	@Override
@@ -76,6 +86,11 @@ public class GlobalContactListener implements ContactListener {
 			return (ContactResolving) userData;
 		} else if (userData instanceof TiledLayer) {
 			Tile tile = ((TiledLayer) userData).getMap().getNearestWall(contact.getWorldManifold().getPoints()[0]);
+			if (tile == null) {
+				Gdx.app.log(GlobalContactListener.class.getSimpleName(),
+						"Wall contact outside Walls at " + contact.getWorldManifold().getPoints());
+				return null;
+			}
 			tile.initStatus();
 			return tile.getStatus();
 		}

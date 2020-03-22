@@ -21,6 +21,7 @@ public class HudRootActor extends Group implements HudElement {
 		this.addActor(new CollisionOverlay());
 		this.addActor(new NavigationOverlay());
 		this.addActor(new FPSCounter());
+		this.addActor(new HuntDisplay());
 		this.addActor(new MenuButton());
 	}
 

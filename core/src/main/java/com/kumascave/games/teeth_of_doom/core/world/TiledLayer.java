@@ -61,7 +61,7 @@ public class TiledLayer extends Group {
 		chains.forEach(x -> {
 			FixtureDef fixtureDef = new FixtureDef();
 			fixtureDef.shape = x;
-			fixtureDef.filter.categoryBits = CollisionFilters.ALL_CATEGORY;
+			fixtureDef.filter.categoryBits = CollisionFilters.BIG_CATEGORY;
 			Fixture fix = walls.createFixture(fixtureDef);
 			fix.setUserData(this);
 		});

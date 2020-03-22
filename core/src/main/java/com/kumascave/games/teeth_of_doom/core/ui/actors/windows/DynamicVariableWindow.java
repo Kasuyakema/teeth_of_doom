@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.kumascave.games.teeth_of_doom.FirstGame;
 import com.kumascave.games.teeth_of_doom.core.ui.GuiFactory;
 import com.kumascave.games.teeth_of_doom.core.ui.GuiUtil;
@@ -31,11 +32,31 @@ public class DynamicVariableWindow extends TitledWindow {
 			try {
 				if (field.canAccess(null)) {
 					if (field.get(null).getClass().equals(Boolean.class)) {
-						CheckBox checkbox = GuiFactory.checkBox(field.getName(), field.getBoolean(null));
+						CheckBox checkbox = GuiFactory.checkBox(field.getName(), field.getBoolean(null), b -> {
+							try {
+								field.set(null, b);
+							} catch (Exception e) {
+								new RuntimeException(e);
+							}
+						});
 						contentTable.add(checkbox).left().expandX();
+						GuiUtil.row(contentTable);
+
+						continue;
+					}
+					if (field.get(null).getClass().equals(Integer.class)) {
+						TextField numberField = GuiFactory.numberField(field.getInt(null), i -> {
+							try {
+								field.set(null, i);
+							} catch (Exception e) {
+								new RuntimeException(e);
+							}
+						});
+						contentTable.add(numberField).left().expandX();
 						GuiUtil.row(contentTable);
 						continue;
 					}
+
 					if (field.get(null).getClass().equals(VHolder.class)) {
 						@SuppressWarnings("rawtypes")
 						Class<? extends Object> clazz = ((VHolder) field.get(null)).getValue().getClass();

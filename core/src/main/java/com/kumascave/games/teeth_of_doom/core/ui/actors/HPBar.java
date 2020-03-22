@@ -2,21 +2,17 @@ package com.kumascave.games.teeth_of_doom.core.ui.actors;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.kumascave.games.teeth_of_doom.AppContext;
-import com.kumascave.games.teeth_of_doom.core.GameContext;
+import com.kumascave.games.teeth_of_doom.core.entity.Entity;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Player;
 import com.kumascave.games.teeth_of_doom.core.mechanics.alignment.Aligned;
-import com.kumascave.games.teeth_of_doom.core.mechanics.damage.HasHitpoints;
-import com.kumascave.games.teeth_of_doom.core.world.LayeredStage;
 
-public class HPBar<P extends Actor & HasHitpoints> extends Image implements Disposable {
+public class HPBar<P extends Entity> extends Image implements Disposable {
 	private P parent;
 
 	private String textureNeutral = "hpBarNeutral.png";
@@ -51,10 +47,12 @@ public class HPBar<P extends Actor & HasHitpoints> extends Image implements Disp
 				new TextureRegion(AppContext.inst().getAssetManager().get(texture, Texture.class))));
 
 		this.parent = parent;
-		this.setSize(parent.getWidth(), 0.02f);
+		this.setSize(parent.getActorGroup().getWidth(), 0.02f);
 		this.setOrigin(Align.center);
-		GameContext.inst();
-		GameContext.getGameStage().addActor(this, LayeredStage.TOP_LAYER);
+		parent.getHudGroup().addActor(this);
+
+		setPosition(parent.getHudGroup().getWidth() - getWidth(), parent.getHudGroup().getHeight() - getHeight() / 2f);
+
 		parent.getHpHolder().addValueChangeListener(evt -> updateHp());
 		parent.getHpMaxHolder().addValueChangeListener(evt -> updateHp());
 	}
@@ -83,17 +81,12 @@ public class HPBar<P extends Actor & HasHitpoints> extends Image implements Disp
 		if (dispose) {
 			_dispose();
 		}
-		Vector2 pos = new Vector2(parent.getOriginX(), parent.getOriginY());
-		Vector2 newPos = parent.localToStageCoordinates(pos);
-		newPos.x -= parent.getWidth() / 2;
-		newPos.y += parent.getHeight() / 2;
-		this.setPosition(newPos.x, newPos.y);
 
 		super.act(delta);
 	}
 
 	private void updateHp() {
-		this.setSize(parent.getWidth() * parent.getHpHolder().getPercentage(), 0.02f);
+		this.setSize(parent.getComponents().get(0).getWidth() * parent.getHpHolder().getPercentage(), 0.02f);
 	}
 
 	@Override

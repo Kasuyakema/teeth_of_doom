@@ -2,8 +2,6 @@ package com.kumascave.games.teeth_of_doom.core.ai.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.ai.pfa.Heuristic;
@@ -17,12 +15,9 @@ import com.kumascave.games.teeth_of_doom.util.Util;
 
 public class GlobalPlanner {
 
-	private static ExecutorService executor = Executors.newCachedThreadPool();
-
 	public static NavigationGraph graph = new NavigationGraph();
 
 	public static List<Vector2> findPath(Vector2 start, Vector2 end, float radius) {
-		// return executor.submit(() -> {
 		Heuristic<Vector2> heuristic = (node, endNode) -> node.dst2(endNode);
 		NavigationGraph graphWithRadius = graph.withRadius(radius);
 		IndexedAStarPathFinder<Vector2> pathFinder = new IndexedAStarPathFinder<Vector2>(graphWithRadius);
@@ -30,8 +25,9 @@ public class GlobalPlanner {
 		pathFinder.searchNodePath(graph.mapToNearestNode(start), graph.mapToNearestNode(end), heuristic, out);
 		List<Vector2> path = Streams.stream(out).collect(Collectors.toList());
 		path = shortcut(path, radius);
+		// remove starting position. we are already there
+		path.remove(0);
 		return path;
-		// });
 	}
 
 	private static List<Vector2> shortcut(List<Vector2> path, float radius) {
@@ -74,7 +70,7 @@ public class GlobalPlanner {
 		return pathValid;
 	}
 
-	private static boolean checkNode(Vector2 node, float radius) {
+	public static boolean checkNode(Vector2 node, float radius) {
 		if (node == null) {
 			return false;
 		}

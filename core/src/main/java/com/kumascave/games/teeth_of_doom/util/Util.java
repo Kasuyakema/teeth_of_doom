@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 public abstract class Util {
+
 	public static void callXTimes(int max, Runnable func) {
 		IntStream.range(0, max).forEach(i -> func.run());
 	}

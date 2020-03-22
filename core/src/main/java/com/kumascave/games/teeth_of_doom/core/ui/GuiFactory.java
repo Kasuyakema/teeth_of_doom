@@ -1,5 +1,7 @@
 package com.kumascave.games.teeth_of_doom.core.ui;
 
+import java.util.function.Consumer;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Scaling;
 import com.kumascave.games.teeth_of_doom.FirstGame;
+import com.kumascave.games.teeth_of_doom.core.ui.actors.NumberField;
 import com.kumascave.games.teeth_of_doom.core.ui.actors.ScalableTextButton;
 import com.kumascave.games.teeth_of_doom.util.jgoodies.VHolder;
 
@@ -39,6 +42,25 @@ public abstract class GuiFactory {
 		return textField;
 	}
 
+	public static NumberField numberField(int val) {
+		return new NumberField(val, SKIN);
+	}
+
+	public static NumberField numberField(int val, Consumer<Integer> func) {
+		NumberField numberField = numberField(val);
+		numberField.addListener((EventListener) event -> {
+			if (event instanceof ChangeEvent) {
+				try {
+					func.accept(numberField.getValue());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return false;
+		});
+		return numberField;
+	}
+
 	public static CheckBox checkBox(String name, boolean checked) {
 		CheckBox checkbox = new CheckBox(name, FirstGame.gameSkin);
 		checkbox.setChecked(checked);
@@ -48,6 +70,21 @@ public abstract class GuiFactory {
 		imageCell.prefHeight(checkbox.getLabel().getPrefHeight()).minHeight(0f);
 		imageCell.prefWidth(checkbox.getLabel().getPrefHeight() + GuiDefaults.CHECKBOX_PADDING).minWidth(0f);
 
+		return checkbox;
+	}
+
+	public static CheckBox checkBox(String name, boolean checked, Consumer<Boolean> func) {
+		CheckBox checkbox = checkBox(name, checked);
+		checkbox.addListener((EventListener) event -> {
+			if (event instanceof ChangeEvent) {
+				try {
+					func.accept(checkbox.isChecked());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return false;
+		});
 		return checkbox;
 	}
 

@@ -17,7 +17,11 @@ public interface PhysicalEntity extends TagOnPropertyChangeSupport {
 	default void applyFriction(float deltaT) {
 
 		applyLinearFriction(deltaT);
+		applyAngularFriction(deltaT);
 
+	}
+
+	default void applyAngularFriction(float deltaT) {
 		// Angular Bohrreibung
 		float ballparkRadius = getBody().getFixtureList().get(0).getShape().getRadius();
 		float fBohr = getFriction().getAngularFriction() * getBody().getMass() * ballparkRadius;
@@ -36,7 +40,6 @@ public interface PhysicalEntity extends TagOnPropertyChangeSupport {
 			wBohr = -fBohr;
 		}
 		getBody().applyTorque(wBohr, true);
-
 	}
 
 	// Linar Gleitreibung
@@ -61,9 +64,27 @@ public interface PhysicalEntity extends TagOnPropertyChangeSupport {
 		return new Pose(getBody().getPosition(), getBody().getAngle());
 	}
 
+	default public float distanceToCenter(Vector2 other) {
+		return getPose().getPos().cpy().sub(other).len();
+	}
+
+	default public float distanceTo(Vector2 other) {
+		return distanceToCenter(other) - getRadius();
+	}
+
+	default public float distanceBetweenCenters(PhysicalEntity other) {
+		return getPose().getPos().cpy().sub(other.getPose().getPos()).len();
+	}
+
+	default public float distanceTo(PhysicalEntity other) {
+		return distanceBetweenCenters(other) - getRadius() - other.getRadius();
+	}
+
 	default public void addDestructionListener(PropertyChangeListener listener) {
 		addPropertyChangeListener(PROPERTY_DESTROY_BODY, listener);
 	}
 
 	public int getZIndex();
+
+	float getRadius();
 }

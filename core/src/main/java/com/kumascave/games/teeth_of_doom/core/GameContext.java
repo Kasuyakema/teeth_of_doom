@@ -2,13 +2,16 @@ package com.kumascave.games.teeth_of_doom.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kumascave.games.teeth_of_doom.core.entity.Mother;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Player;
+import com.kumascave.games.teeth_of_doom.core.mechanics.HuntDirector;
 import com.kumascave.games.teeth_of_doom.core.mechanics.damage.GlobalContactListener;
 import com.kumascave.games.teeth_of_doom.core.physics.WorldUtil;
 import com.kumascave.games.teeth_of_doom.core.ui.HudController;
@@ -20,6 +23,7 @@ import com.kumascave.games.teeth_of_doom.core.world.CPos;
 import com.kumascave.games.teeth_of_doom.core.world.CollisionMap;
 import com.kumascave.games.teeth_of_doom.core.world.LayeredStage;
 import com.kumascave.games.teeth_of_doom.screens.GameScreen;
+import com.kumascave.games.teeth_of_doom.util.jgoodies.VHolder;
 
 import lombok.Setter;
 
@@ -39,12 +43,21 @@ public class GameContext implements Disposable {
 	@Setter
 	private GameScreen gameScreen;
 
-	Player player;
+	private Player player;
+
+	private Mother mother;
+
+	private VHolder<Boolean> huntOngoing;
+
+	private HuntDirector huntDirector;
+
+	public static final RandomXS128 RANDOM = new RandomXS128();
 
 	private GameContext() {
 		initWorld();
 		initHudStage();
 		hudController = new HudController();
+		huntOngoing = new VHolder<>(true);
 	}
 
 	private void initGameStage() {
@@ -113,6 +126,7 @@ public class GameContext implements Disposable {
 		}
 		gameStage = null;
 		player = null;
+		mother = null;
 		hudStage.dispose();
 		hudStage = null;
 		if (gameScreen != null) {
@@ -120,6 +134,11 @@ public class GameContext implements Disposable {
 			gameScreen = null;
 		}
 		instance = null;
+		huntOngoing = null;
+		if (huntDirector != null) {
+			huntDirector.dispose();
+		}
+		huntDirector = null;
 		// System.out.println("GameContext.dispose()");
 	}
 
@@ -131,8 +150,11 @@ public class GameContext implements Disposable {
 		initGameStage();
 		player = new Player();
 		player.addToWorld();
+		mother = new Mother();
+		mother.addToWorld();
 		hudController.setHudRootActor(new HudRootActor());
 		hudStage.addActor(hudController.getHudRootActor());
+		huntDirector = new HuntDirector();
 	}
 
 	public static LayeredStage getGameStage() {
@@ -159,6 +181,10 @@ public class GameContext implements Disposable {
 		return inst()._getPlayer();
 	}
 
+	public static Mother getMother() {
+		return inst()._getMother();
+	}
+
 	private LayeredStage _getGameStage() {
 		return gameStage;
 	}
@@ -182,4 +208,17 @@ public class GameContext implements Disposable {
 	private Player _getPlayer() {
 		return player;
 	}
+
+	private Mother _getMother() {
+		return mother;
+	}
+
+	public static VHolder<Boolean> getHuntOngoing() {
+		return inst()._getHuntOngoing();
+	}
+
+	private VHolder<Boolean> _getHuntOngoing() {
+		return huntOngoing;
+	}
+
 }

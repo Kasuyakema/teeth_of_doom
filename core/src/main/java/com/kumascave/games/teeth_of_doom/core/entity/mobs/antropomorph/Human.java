@@ -3,13 +3,12 @@ package com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Align;
 import com.google.common.collect.Lists;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable;
-import com.kumascave.games.teeth_of_doom.core.entity.item.Item;
-import com.kumascave.games.teeth_of_doom.core.entity.item.ItemState;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlot;
 import com.kumascave.games.teeth_of_doom.core.entity.item.Equippable.EquipmentSlotType;
+import com.kumascave.games.teeth_of_doom.core.entity.item.Item;
+import com.kumascave.games.teeth_of_doom.core.entity.item.ItemState;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.Mob;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Hand.HandType;
 import com.kumascave.games.teeth_of_doom.core.physics.Friction;
@@ -37,6 +36,8 @@ public class Human extends Mob {
 	private final Hand leftHand;
 	@Getter
 	private final Hand rightHand;
+	@Getter
+	private float radius;
 
 	@Builder
 	public Human(float diam, Pose pose, float density, Friction friction) {
@@ -45,7 +46,7 @@ public class Human extends Mob {
 		this.leftHand = new Hand(this, armLength, HandType.LEFT);
 		this.rightHand = new Hand(this, armLength, HandType.RIGHT);
 		this.inventory = new Inventory(this);
-		this.setOrigin(Align.center);
+		this.radius = diam / 2f;
 	}
 
 	public Equippable equip(EquipmentSlot slot, Equippable equipment) {

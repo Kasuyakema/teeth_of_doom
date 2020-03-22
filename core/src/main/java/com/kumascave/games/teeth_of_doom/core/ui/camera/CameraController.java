@@ -74,7 +74,7 @@ public class CameraController {
 
 	public void toggleMode() {
 		if (this.mode.equals(CameraMode.FREE)) {
-			switchMode(CameraMode.LOCKED_TO_ACTOR, GameContext.getPlayer());
+			switchMode(CameraMode.LOCKED_TO_ACTOR, GameContext.getPlayer().getLeadComponent());
 			return;
 		}
 		switchMode(CameraMode.FREE, null);

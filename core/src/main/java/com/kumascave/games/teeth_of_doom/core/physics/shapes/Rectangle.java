@@ -16,6 +16,11 @@ public class Rectangle extends PolygonShape implements Disposable {
 		this.setAsBox(width / 2, height / 2);
 	}
 
+	public Rectangle(float width, float height, Vector2 center, float angle) {
+		this();
+		this.setAsBox(width / 2, height / 2, center, angle);
+	}
+
 	public Rectangle(float square) {
 		this();
 		this.setAsBox(square / 2, square / 2);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.kumascave.games.teeth_of_doom.core.entity.Entity;
 import com.kumascave.games.teeth_of_doom.core.entity.StateMachine;
 import com.kumascave.games.teeth_of_doom.core.entity.Transition;
@@ -13,7 +14,6 @@ import com.kumascave.games.teeth_of_doom.core.physics.Friction;
 import com.kumascave.games.teeth_of_doom.core.physics.Pose;
 import com.kumascave.games.teeth_of_doom.core.world.CollisionFilters;
 import com.kumascave.games.teeth_of_doom.core.world.LayeredStage;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +28,7 @@ public abstract class Item extends Entity implements WithStateMachine<Item> {
 	protected Item(Vector2 actorSize, Pose startingOdom, Shape shape, BodyType bodyType, float density,
 			Friction friction, float restitution) {
 		super(actorSize, startingOdom, shape, bodyType, density, friction, restitution);
-		fixtureDef.filter.categoryBits = CollisionFilters.GROUND_CATEGORY;
-		fixtureDef.filter.maskBits = CollisionFilters.SMALL_ITEM_MASK;
+		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 	}
 
 	@Override
@@ -39,8 +38,8 @@ public abstract class Item extends Entity implements WithStateMachine<Item> {
 
 	protected void prepareForInventory() {
 		removeFromWorld();
-		setPosition(0, 0);
-		setRotation(0);
+		getLeadComponent().setPosition(0, 0);
+		getLeadComponent().setRotation(0);
 	}
 
 	public class ItemStateMachine<T extends Item> extends StateMachine<T> {
@@ -61,6 +60,5 @@ public abstract class Item extends Entity implements WithStateMachine<Item> {
 
 			this.addTransitions(transitionz);
 		}
-
 	}
 }

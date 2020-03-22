@@ -11,8 +11,8 @@ import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
 import com.kumascave.games.teeth_of_doom.core.entity.Transition;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Hand;
-import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Human;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Hand.HandType;
+import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Human;
 import com.kumascave.games.teeth_of_doom.core.physics.Friction;
 import com.kumascave.games.teeth_of_doom.core.physics.Pose;
 import com.kumascave.games.teeth_of_doom.core.physics.WorldUtil;
@@ -43,8 +43,10 @@ public abstract class Handheld extends Item implements EquipUsable {
 	}
 
 	protected Pose getThrowPose() {
-		return new Pose(user.getHeading().cpy().setLength(user.getWidth() / 2 + getSize().y / 2 + 0.1f)
-				.add(user.getBody().getPosition()), user.getBody().getAngle());
+		return new Pose(
+				user.getHeading().cpy().setLength(user.getLeadComponent().getWidth() / 2 + getSize().y / 2 + 0.1f)
+						.add(user.getBody().getPosition()),
+				user.getBody().getAngle());
 	}
 
 	protected abstract Vector2 getSize();
@@ -88,7 +90,7 @@ public abstract class Handheld extends Item implements EquipUsable {
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 		this.setPositionFull(getFixedPose());
 		WeldJointDef weld = new WeldJointDef();
-		weld.initialize(user.getBody(), body, user.getBody().getPosition());
+		weld.initialize(user.getBody(), getBody(), user.getBody().getPosition());
 		weld.collideConnected = false;
 		weld.frequencyHz = 0;
 		weld.dampingRatio = 1;

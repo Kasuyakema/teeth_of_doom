@@ -52,7 +52,7 @@ public class Spear extends MeleeWeapon {
 	public Spear(Pose odom) {
 		super(actorSize, odom, new Rectangle(size.x, size.y), BodyType.DynamicBody, density, friction, restitution);
 		stickJoint.addDestructionListener(evt -> onStickJointDestruction());
-		setDrawable(new TextureRegionDrawable(
+		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("harpoon.png", Texture.class))));
 		stateMachine = new SpearStateMachine<Spear>(this);
 	}
@@ -71,19 +71,19 @@ public class Spear extends MeleeWeapon {
 	protected Pose getFixedPose() {
 		if (position == HandType.LEFT) {
 			return new Pose(user.getHeading().cpy().rotateRad((float) Math.PI / 2)
-					.setLength(user.getWidth() / 2 + size.y / 2).add(user.getBody().getPosition()),
+					.setLength(user.getLeadComponent().getWidth() / 2 + size.y / 2).add(user.getBody().getPosition()),
 					user.getBody().getAngle());
 		} else {
 			return new Pose(user.getHeading().cpy().rotateRad((float) -Math.PI / 2)
-					.setLength(user.getWidth() / 2 + size.y / 2).add(user.getBody().getPosition()),
+					.setLength(user.getLeadComponent().getWidth() / 2 + size.y / 2).add(user.getBody().getPosition()),
 					user.getBody().getAngle());
 		}
 	}
 
 	@Override
 	protected Pose getSwingPose() {
-		return new Pose(user.getHeading().cpy().setLength(user.getWidth() / 2).add(user.getBody().getPosition()),
-				user.getBody().getAngle());
+		return new Pose(user.getHeading().cpy().setLength(user.getLeadComponent().getWidth() / 2)
+				.add(user.getBody().getPosition()), user.getBody().getAngle());
 	}
 
 	@Override
@@ -95,11 +95,11 @@ public class Spear extends MeleeWeapon {
 		setCollisionFilter(CollisionFilters.ALL_CATEGORY, CollisionFilters.WEAPON_MASK);
 
 		PrismaticJointDef def = new PrismaticJointDef();
-		def.initialize(user.getBody(), body, user.getBody().getPosition(),
+		def.initialize(user.getBody(), getBody(), user.getBody().getPosition(),
 				pose.getPos().cpy().sub(user.getBody().getPosition()));
 		def.collideConnected = false;
 		def.enableLimit = true;
-		def.upperTranslation = getWidth() / 2f;
+		def.upperTranslation = getLeadComponent().getWidth() / 2f;
 		def.lowerTranslation = 0f;
 		GameContext.inst();
 		joint = (PrismaticJoint) WorldUtil.createJoint(def);
@@ -115,7 +115,7 @@ public class Spear extends MeleeWeapon {
 
 	@Override
 	protected void stopSwing() {
-		body.setBullet(false);
+		getBody().setBullet(false);
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 		GameContext.inst();
 		WorldUtil.destroyJoint(joint);
@@ -148,7 +148,7 @@ public class Spear extends MeleeWeapon {
 				getHeading().angleRad() - (float) Math.PI / 2.0f);
 		setPositionFull(pose);
 		WeldJointDef weld = new WeldJointDef();
-		weld.initialize(target.getBody(), body, target.getBody().getPosition());
+		weld.initialize(target.getBody(), getBody(), target.getBody().getPosition());
 		weld.collideConnected = false;
 		weld.frequencyHz = 0;
 		weld.dampingRatio = 1;

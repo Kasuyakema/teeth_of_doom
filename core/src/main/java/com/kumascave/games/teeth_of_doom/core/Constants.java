@@ -20,4 +20,9 @@ public class Constants {
 
 	public static final float PATHFINDING_BUFFER = .1f;
 	public static final float PATHFINDING_PATH_CHECK_STEP = .1f;
+	// public static final float ZERO_SPEED_THRESHOLD = .01f;
+	public static final float NAVIGATION_ZERO_DISTANCE_THRESHOLD = .001f;
+	public static final float NAVIGATION_BREAK_DISTANCE = 0.2f;
+	// if a Target moves this far we need a new Path
+	public static final float NAVIGATION_MOVEMENT_THRESHOLD = 0.1f;
 }

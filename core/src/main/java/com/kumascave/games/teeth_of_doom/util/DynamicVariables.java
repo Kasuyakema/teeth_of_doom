@@ -14,4 +14,8 @@ public abstract class DynamicVariables {
 	public static VHolder<Boolean> navigationOverlay = new VHolder<>(false);
 
 	public static VHolder<Boolean> pause = new VHolder<>(false);
+
+	public static float calmTime = 20f;
+	public static int huntBaseAmount = 10;
+	public static float groupSizeMultiplier = 1.5f;
 }

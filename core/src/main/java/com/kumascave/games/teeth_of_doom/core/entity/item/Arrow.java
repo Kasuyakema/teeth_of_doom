@@ -37,10 +37,9 @@ public class Arrow extends Item {
 
 	public Arrow(Pose odom) {
 		super(actorSize, odom, new Rectangle(size.x, size.y), BodyType.DynamicBody, density, friction, restitution);
-		setDrawable(new TextureRegionDrawable(
+		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("arrow.png", Texture.class))));
-		fixtureDef.filter.categoryBits = CollisionFilters.GROUND_CATEGORY;
-		fixtureDef.filter.maskBits = CollisionFilters.SMALL_ITEM_MASK;
+		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
 		stateMachine = new ArrowStateMachine<Arrow>(this);
 	}
 
@@ -90,12 +89,12 @@ public class Arrow extends Item {
 				getHeading().angleRad());
 		setPositionFull(pose);
 		WeldJointDef weld = new WeldJointDef();
-		weld.initialize(target.getBody(), body, target.getBody().getPosition());
+		weld.initialize(target.getBody(), getBody(), target.getBody().getPosition());
 		weld.collideConnected = false;
 		weld.frequencyHz = 0;
 		weld.dampingRatio = 1;
 		WorldUtil.createJoint(weld);
-		this.setZIndex(Math.max(0, target.getZIndex() - 1));
+		this.getLeadComponent().setZIndex(Math.max(0, target.getZIndex() - 1));
 	}
 
 	class ArrowStateMachine<T extends Arrow> extends ItemStateMachine<T> {
@@ -130,8 +129,8 @@ public class Arrow extends Item {
 				return false;
 			}
 			boolean moving = false;
-			moving = body.getLinearVelocity().len2() > 0.5f;
-			moving = moving || body.getAngularVelocity() > 0.5f;
+			moving = getBody().getLinearVelocity().len2() > 0.5f;
+			moving = moving || getBody().getAngularVelocity() > 0.5f;
 			// TODO: return moving;
 			return true;
 		}

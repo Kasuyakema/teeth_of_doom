@@ -39,7 +39,7 @@ public class Bow extends Handheld {
 
 	public Bow(Pose odom) {
 		super(size, odom, new DShape(size.x, size.y), BodyType.DynamicBody, density, friction, restitution);
-		setDrawable(new TextureRegionDrawable(
+		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("bow.png", Texture.class))));
 		stateMachine = new BowStateMachine<Bow>(this);
 //		firePosCheckResult.addPropertyChangeListener(evt -> {
@@ -63,11 +63,11 @@ public class Bow extends Handheld {
 	protected Pose getFixedPose() {
 		if (position == HandType.LEFT) {
 			return new Pose(user.getHeading().cpy().rotateRad((float) Math.PI / 2)
-					.setLength(user.getWidth() / 2 + size.x / 2).add(user.getBody().getPosition()),
+					.setLength(user.getLeadComponent().getWidth() / 2 + size.x / 2).add(user.getBody().getPosition()),
 					user.getBody().getAngle() + (float) Math.PI / 2);
 		} else {
 			return new Pose(user.getHeading().cpy().rotateRad((float) -Math.PI / 2)
-					.setLength(user.getWidth() / 2 + size.x / 2).add(user.getBody().getPosition()),
+					.setLength(user.getLeadComponent().getWidth() / 2 + size.x / 2).add(user.getBody().getPosition()),
 					user.getBody().getAngle() - (float) Math.PI / 2);
 		}
 	}
@@ -82,7 +82,7 @@ public class Bow extends Handheld {
 		Pose pose = getFirePose();
 		setPositionFull(pose);
 		WeldJointDef weld = new WeldJointDef();
-		weld.initialize(user.getBody(), body, user.getBody().getPosition());
+		weld.initialize(user.getBody(), getBody(), user.getBody().getPosition());
 		weld.collideConnected = false;
 		weld.frequencyHz = 0;
 		weld.dampingRatio = 1;
@@ -94,14 +94,15 @@ public class Bow extends Handheld {
 	}
 
 	protected Pose getFirePose() {
-		return new Pose(
-				user.getHeading().cpy().setLength(user.getWidth() / 2 + size.x / 2).add(user.getBody().getPosition()),
-				user.getBody().getAngle());
+		return new Pose(user.getHeading().cpy().setLength(user.getLeadComponent().getWidth() / 2 + size.x / 2)
+				.add(user.getBody().getPosition()), user.getBody().getAngle());
 	}
 
 	protected Pose getArrowPose() {
-		return new Pose(user.getHeading().cpy().setLength(user.getWidth() / 2f + Arrow.size.x / 2f + 0.02f)
-				.add(user.getBody().getPosition()), user.getBody().getAngle());
+		return new Pose(
+				user.getHeading().cpy().setLength(user.getLeadComponent().getWidth() / 2f + Arrow.size.x / 2f + 0.02f)
+						.add(user.getBody().getPosition()),
+				user.getBody().getAngle());
 	}
 
 	@Override
@@ -117,10 +118,10 @@ public class Bow extends Handheld {
 			List<Transition> transitionz = new ArrayList<>();
 
 			transitionz.add(new Transition(HandheldState.FIXED, HandheldState.FIRE,
-					() -> checkmovement(getFirePose().getPos()) && checkmovement(getArrowPose().getPos()),
+					() -> checkPosition(getFirePose().getPos()) && checkPosition(getArrowPose().getPos()),
 					args -> getSubject().startFire()));
 			transitionz.add(new Transition(HandheldState.FIRE, HandheldState.FIXED,
-					() -> checkmovement(getFixedPose().getPos()), args -> getSubject().stopFire()));
+					() -> checkPosition(getFixedPose().getPos()), args -> getSubject().stopFire()));
 
 			this.addTransitions(transitionz);
 		}
