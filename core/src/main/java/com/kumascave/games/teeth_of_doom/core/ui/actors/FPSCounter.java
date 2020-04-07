@@ -2,13 +2,19 @@ package com.kumascave.games.teeth_of_doom.core.ui.actors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.kumascave.games.teeth_of_doom.core.Constants;
 
 public class FPSCounter extends Label implements HudElement {
 	private static final String FPS_PREFIX = "FPS:";
+
+	private static final float upperThreshold = 1.2f / Constants.TARGET_FPS;
+	// private static final float lowerThreshold = 0.8f / Constants.TARGET_FPS;
 
 	float timeSinceUpdate = 0;
 	List<Float> deltas = new ArrayList<>();
@@ -35,6 +41,10 @@ public class FPSCounter extends Label implements HudElement {
 	}
 
 	private String calculateFramerate() {
+		List<Float> dts = deltas.stream().filter(x -> (x > upperThreshold)).collect(Collectors.toList());
+		if (!dts.isEmpty()) {
+			Gdx.app.debug(FPSCounter.class.getSimpleName(), dts.toString());
+		}
 		return Integer.toString(deltas.size());
 	}
 

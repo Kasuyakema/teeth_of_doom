@@ -25,4 +25,8 @@ public class Constants {
 	public static final float NAVIGATION_BREAK_DISTANCE = 0.2f;
 	// if a Target moves this far we need a new Path
 	public static final float NAVIGATION_MOVEMENT_THRESHOLD = 0.1f;
+
+	// if a Target moves this far we need a new Path
+	public static final int TARGET_FPS = 60;
+
 }
