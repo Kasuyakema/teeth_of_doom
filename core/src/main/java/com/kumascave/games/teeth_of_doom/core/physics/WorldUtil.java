@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
+import com.kumascave.games.teeth_of_doom.util.Util;
 
 import lombok.Setter;
 
@@ -48,13 +49,23 @@ public class WorldUtil {
 		return world.createJoint(jointDef);
 	}
 
-	public static void destroyJoint(Joint joint) {
-		inst()._destroyJoint(joint);
+	public static void destroyJoint(Joint joint, Body refBody) {
+		inst()._destroyJoint(joint, refBody);
 	}
 
-	private void _destroyJoint(Joint joint) {
+	private void _destroyJoint(Joint joint, Body refBody) {
 		requireOutsideStep();
-		world.destroyJoint(joint);
+		if (_jointExists(joint, refBody)) {
+			world.destroyJoint(joint);
+		}
+	}
+
+	public static boolean jointExists(Joint joint, Body refBody) {
+		return inst()._jointExists(joint, refBody);
+	}
+
+	public boolean _jointExists(Joint joint, Body refBody) {
+		return Util.toStream(refBody.getJointList()).map(x -> x.joint).anyMatch(x -> x == joint);
 	}
 
 	public static void worldStep() {

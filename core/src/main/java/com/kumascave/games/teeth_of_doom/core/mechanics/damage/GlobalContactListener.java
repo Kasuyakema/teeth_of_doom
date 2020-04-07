@@ -75,6 +75,11 @@ public class GlobalContactListener implements ContactListener {
 			return (DmgResolving) userData;
 		} else if (userData instanceof TiledLayer) {
 			Tile tile = ((TiledLayer) userData).getMap().getNearestWall(contact.getWorldManifold().getPoints()[0]);
+			if (tile == null) {
+				Gdx.app.log(GlobalContactListener.class.getSimpleName(),
+						"Wall contact outside Walls at " + contact.getWorldManifold().getPoints()[0]);
+				return null;
+			}
 			tile.initStatus();
 			return tile.getStatus();
 		}
@@ -88,7 +93,7 @@ public class GlobalContactListener implements ContactListener {
 			Tile tile = ((TiledLayer) userData).getMap().getNearestWall(contact.getWorldManifold().getPoints()[0]);
 			if (tile == null) {
 				Gdx.app.log(GlobalContactListener.class.getSimpleName(),
-						"Wall contact outside Walls at " + contact.getWorldManifold().getPoints());
+						"Wall contact outside Walls at " + contact.getWorldManifold().getPoints()[0]);
 				return null;
 			}
 			tile.initStatus();

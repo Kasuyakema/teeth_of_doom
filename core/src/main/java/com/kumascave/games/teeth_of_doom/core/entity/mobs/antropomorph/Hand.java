@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
-import com.kumascave.games.teeth_of_doom.core.ManagedJointReference;
 import com.kumascave.games.teeth_of_doom.core.entity.Entity;
 import com.kumascave.games.teeth_of_doom.core.entity.EntityComponent;
 import com.kumascave.games.teeth_of_doom.core.entity.StateMachine;
@@ -30,7 +29,7 @@ public class Hand implements WithStateMachine<Hand> {
 	private HandType type;
 	private Human owner;
 	private float armLength;
-	protected ManagedJointReference grabbedObject = new ManagedJointReference(null);
+	protected MonitoredJoint grabbedObject;
 	@Getter
 	protected Handheld equippedObject;
 
@@ -44,7 +43,7 @@ public class Hand implements WithStateMachine<Hand> {
 		this.type = type;
 		owner.getEquipmentHolder().addPropertyChangeListener(equipmentSlotFromHandType(type).toString(),
 				(evt) -> handleEquipEvent(evt));
-		grabbedObject.addDestructionListener((evt) -> onGrabbedObjectDestruction());
+		grabbedObject = new MonitoredJoint(owner.getActorGroup(), () -> onGrabbedObjectDestruction());
 	}
 
 	private void handleEquipEvent(PropertyChangeEvent evt) {
@@ -122,6 +121,7 @@ public class Hand implements WithStateMachine<Hand> {
 		def.dampingRatio = 1;
 		def.collideConnected = true;
 		GameContext.inst();
+		grabbedObject.setRefBody(owner.getBody());
 		grabbedObject.setJoint(WorldUtil.createJoint(def));
 	}
 

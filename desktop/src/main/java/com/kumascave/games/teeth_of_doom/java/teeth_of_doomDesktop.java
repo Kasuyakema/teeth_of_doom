@@ -12,8 +12,8 @@ public class teeth_of_doomDesktop {
 		config.fullscreen = false;
 		config.resizable = true;
 		config.forceExit = true;
-		config.foregroundFPS = 300;
-		config.backgroundFPS = 300;
+		config.foregroundFPS = 60;
+		config.backgroundFPS = 60;
 		config.vSyncEnabled = false;
 		new LwjglApplication(new FirstGame(), config);
 	}

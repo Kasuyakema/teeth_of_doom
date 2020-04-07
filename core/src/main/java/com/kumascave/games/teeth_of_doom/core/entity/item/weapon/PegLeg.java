@@ -48,10 +48,8 @@ public class PegLeg extends MeleeWeapon {
 	protected void stopSwing() {
 		getBody().setBullet(false);
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
-		GameContext.inst();
-		WorldUtil.destroyJoint(distJoint);
-		GameContext.inst();
-		WorldUtil.destroyJoint(revJoint);
+		WorldUtil.destroyJoint(distJoint, getBody());
+		WorldUtil.destroyJoint(revJoint, getBody());
 		fix();
 	}
 

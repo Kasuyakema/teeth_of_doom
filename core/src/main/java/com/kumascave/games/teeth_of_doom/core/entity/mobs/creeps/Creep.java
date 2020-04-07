@@ -20,7 +20,7 @@ public class Creep extends Mob {
 
 	CreepTree behavoirTree;
 
-	public static Friction friction = new Friction(20f, 20f, 2f, 2f, 0.0f);
+	public static Friction friction = new Friction(20f, 20f, 2f, 2f, 1.0f);
 	public static float weight = 3f;
 	public static float diam = 0.2f;
 	public static float radius = diam / 2f;

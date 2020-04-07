@@ -184,6 +184,8 @@ public abstract class Entity implements PhysicalEntity, HasHitpoints, Disposable
 		actorGroup.clear();
 		hudGroup.remove();
 		hudGroup.clear();
+		aliveHolder.dispose();
+		hpHolder.dispose();
 	}
 
 	public void addToWorld() {

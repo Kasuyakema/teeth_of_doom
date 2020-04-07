@@ -15,7 +15,6 @@ import com.kumascave.games.teeth_of_doom.core.physics.Pose;
 import com.kumascave.games.teeth_of_doom.core.physics.shapes.Circle;
 import com.kumascave.games.teeth_of_doom.core.world.CollisionFilters;
 import com.kumascave.games.teeth_of_doom.core.world.LayeredStage;
-import com.kumascave.games.teeth_of_doom.screens.TitleScreen;
 
 public class Mother extends Mob {
 
@@ -35,8 +34,9 @@ public class Mother extends Mob {
 	@Override
 	public void resolveContact(ContactResolving contact) {
 		if (contact instanceof Creep && !((Creep) contact).isAlive()) {
-			System.out.println("Food!");
+			System.out.println("Crack open! Food!");
 			((Creep) contact).dispose();
+			GameContext.getPlayer().getHpHolder().add(30);
 		}
 	}
 
@@ -52,10 +52,8 @@ public class Mother extends Mob {
 
 	@Override
 	protected void onDeath() {
-		// ToDo: Death message
-		AppContext.inst().getGame().setScreen(new TitleScreen());
-		GameContext.inst().dispose();
 		super.onDeath();
+		System.out.println("Mother...");
 	}
 
 	@Override

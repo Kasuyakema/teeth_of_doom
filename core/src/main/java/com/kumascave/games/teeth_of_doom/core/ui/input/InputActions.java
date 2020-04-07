@@ -11,6 +11,7 @@ import com.kumascave.games.teeth_of_doom.core.GameContext;
 import com.kumascave.games.teeth_of_doom.core.ui.actors.windows.DynamicVariableWindow;
 import com.kumascave.games.teeth_of_doom.core.ui.actors.windows.InventoryWindow;
 import com.kumascave.games.teeth_of_doom.util.DynamicVariables;
+import com.kumascave.games.teeth_of_doom.util.gif.GifExporter;
 
 import lombok.Getter;
 
@@ -61,6 +62,9 @@ public class InputActions {
 		result.put(ConfigKey.KEYBIND_INVENTORY, () -> InventoryWindow.toggle());
 
 		result.put(ConfigKey.KEYBIND_PAUSE, () -> DynamicVariables.pause.setValue(!DynamicVariables.pause.getValue()));
+
+		result.put(ConfigKey.KEYBIND_UTIL1, () -> GifExporter.exportPng("screenshot"));
+		result.put(ConfigKey.KEYBIND_UTIL2, () -> GifExporter.exportGif());
 
 		return result;
 	}

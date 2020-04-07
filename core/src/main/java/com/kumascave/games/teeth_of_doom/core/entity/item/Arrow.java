@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.WorldManifold;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kumascave.games.teeth_of_doom.AppContext;
+import com.kumascave.games.teeth_of_doom.core.DelayedAction;
 import com.kumascave.games.teeth_of_doom.core.entity.Transition;
 import com.kumascave.games.teeth_of_doom.core.mechanics.damage.Damage;
 import com.kumascave.games.teeth_of_doom.core.mechanics.damage.DmgResolving;
@@ -67,6 +68,7 @@ public class Arrow extends Item {
 
 	protected void stopShot() {
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
+		actorGroup.addAction(new DelayedAction(5f, () -> this.dispose()));
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public abstract class Handheld extends Item implements EquipUsable {
 
 	protected void unFix() {
 		GameContext.inst();
-		WorldUtil.destroyJoint(fixedJoint);
+		WorldUtil.destroyJoint(fixedJoint, getBody());
 	}
 
 	protected abstract Pose getFixedPose();

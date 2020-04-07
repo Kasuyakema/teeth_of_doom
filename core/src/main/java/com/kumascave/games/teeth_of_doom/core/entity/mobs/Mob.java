@@ -67,7 +67,7 @@ public abstract class Mob extends Entity implements Aligned, Attacking {
 			float restitution) {
 		super(actorSize, startingOdom, shape, BodyType.DynamicBody, density, friction, restitution);
 		this.hpBar = new HPBar<>(this);
-		setCollisionFilter(CollisionFilters.MOB_CATEGORY);
+		setCollisionFilter(CollisionFilters.MOB_CATEGORY, CollisionFilters.MOB_MASK);
 		proximity = new Proximity(this);
 	}
 
@@ -218,6 +218,12 @@ public abstract class Mob extends Entity implements Aligned, Attacking {
 			setFuture(null);
 		}
 		lookAtWaypount = false;
+	}
+
+	@Override
+	protected void onDeath() {
+		this.setCollisionFilter(CollisionFilters.GROUND_CATEGORY);
+		super.onDeath();
 	}
 
 }

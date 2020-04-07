@@ -42,6 +42,12 @@ public enum ConfigKey {
 
 	KEYBIND_USE(Keys.F),
 
+	KEYBIND_UTIL1(Keys.C),
+
+	KEYBIND_UTIL2(Keys.V),
+
+	KEYBIND_UTIL3(Keys.B),
+
 	// multiple Keybinds? Keyboard Pause-Button?
 	KEYBIND_PAUSE(Keys.SPACE),
 

@@ -15,6 +15,7 @@ import lombok.Getter;
 
 public class HuntDirector implements Disposable {
 	private static VHolder<Integer> spawnCounter;
+	private static VHolder<Integer> livingCounter;
 	@Getter
 	private static int huntCounter;
 	@Getter
@@ -26,11 +27,13 @@ public class HuntDirector implements Disposable {
 		super();
 		spawnpoints = new ArrayList<>();
 		spawnCounter = new VHolder<>(0);
+		livingCounter = new VHolder<>(0);
 		huntCounter = 1;
 		groupSize = 2;
 		GameContext.getHuntOngoing()
 				.addPropertyChangeListener(evt -> spawnpoints.forEach(x -> x.setAwake((Boolean) evt.getNewValue())));
-		spawnCounter.addPropertyChangeListener(evt -> endHuntIfDone());
+		spawnCounter.addPropertyChangeListener(evt -> endSpawningIfDone());
+		livingCounter.addPropertyChangeListener(evt -> endHuntIfDone());
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -38,17 +41,27 @@ public class HuntDirector implements Disposable {
 		spawnpoints.add(spawnpoint);
 	}
 
-	public static void addSpawned(int i) {
-		spawnCounter.setValue(spawnCounter.getValue() + i);
+	public static void addSpawned(List<Mob> mobs) {
+		spawnCounter.setValue(spawnCounter.getValue() + mobs.size());
+		livingCounter.setValue(livingCounter.getValue() + mobs.size());
+		mobs.forEach(x -> x.getAliveHolder().addPropertyChangeListener(evt -> {
+			livingCounter.setValue(livingCounter.getValue() - 1);
+		}));
+	}
+
+	protected void endSpawningIfDone() {
+		if (spawnCounter.getValue() > DynamicVariables.huntBaseAmount * huntCounter) {
+			spawnpoints.forEach(x -> x.setAwake(false));
+		}
 	}
 
 	protected void endHuntIfDone() {
-		if (spawnCounter.getValue() > DynamicVariables.huntBaseAmount * huntCounter) {
+		if (livingCounter.getValue() <= 0) {
 			GameContext.getHuntOngoing().setValue(false);
 			spawnCounter.setValue(0);
+			livingCounter.setValue(0);
 			huntCounter++;
 			groupSize = (int) (huntCounter * DynamicVariables.groupSizeMultiplier);
-			GameContext.getPlayer().getHpHolder().add(100);
 			GameContext.getGameStage().addAction(
 					new DelayedAction(DynamicVariables.calmTime, () -> GameContext.getHuntOngoing().setValue(true)));
 		}
@@ -57,6 +70,7 @@ public class HuntDirector implements Disposable {
 	@Override
 	public void dispose() {
 		spawnCounter = null;
+		livingCounter = null;
 		spawnpoints.clear();
 		spawnpoints = null;
 	}

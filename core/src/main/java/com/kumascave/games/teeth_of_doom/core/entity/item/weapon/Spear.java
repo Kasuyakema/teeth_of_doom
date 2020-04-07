@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kumascave.games.teeth_of_doom.AppContext;
 import com.kumascave.games.teeth_of_doom.core.DelayedAction;
 import com.kumascave.games.teeth_of_doom.core.GameContext;
-import com.kumascave.games.teeth_of_doom.core.ManagedJointReference;
 import com.kumascave.games.teeth_of_doom.core.entity.Transition;
 import com.kumascave.games.teeth_of_doom.core.entity.item.HandheldState;
 import com.kumascave.games.teeth_of_doom.core.entity.mobs.antropomorph.Hand.HandType;
@@ -41,7 +41,7 @@ public class Spear extends MeleeWeapon {
 	private static final int baseDmg = 10;
 	private int dmg = 0;
 
-	protected ManagedJointReference stickJoint = new ManagedJointReference(null);
+	protected Joint stickJoint;
 
 	Runnable stickRunnable;
 
@@ -51,7 +51,6 @@ public class Spear extends MeleeWeapon {
 
 	public Spear(Pose odom) {
 		super(actorSize, odom, new Rectangle(size.x, size.y), BodyType.DynamicBody, density, friction, restitution);
-		stickJoint.addDestructionListener(evt -> onStickJointDestruction());
 		getLeadComponent().setDrawable(new TextureRegionDrawable(
 				new TextureRegion(AppContext.inst().getAssetManager().get("harpoon.png", Texture.class))));
 		stateMachine = new SpearStateMachine<Spear>(this);
@@ -117,8 +116,7 @@ public class Spear extends MeleeWeapon {
 	protected void stopSwing() {
 		getBody().setBullet(false);
 		setCollisionFilter(CollisionFilters.GROUND_CATEGORY, CollisionFilters.SMALL_ITEM_MASK);
-		GameContext.inst();
-		WorldUtil.destroyJoint(joint);
+		WorldUtil.destroyJoint(joint, getBody());
 		fix();
 	}
 
@@ -153,7 +151,7 @@ public class Spear extends MeleeWeapon {
 		weld.frequencyHz = 0;
 		weld.dampingRatio = 1;
 		GameContext.inst();
-		stickJoint.setJoint(WorldUtil.createJoint(weld));
+		stickJoint = WorldUtil.createJoint(weld);
 	}
 
 	@Override

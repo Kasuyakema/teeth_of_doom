@@ -73,7 +73,7 @@ public class Bow extends Handheld {
 	}
 
 	protected void stopFire() {
-		WorldUtil.destroyJoint(fixedJoint);
+		WorldUtil.destroyJoint(fixedJoint, getBody());
 		fix();
 	}
 

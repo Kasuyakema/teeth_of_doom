@@ -1,8 +1,11 @@
 package com.kumascave.games.teeth_of_doom.util.jgoodies;
 
+import java.util.Arrays;
+
+import com.badlogic.gdx.utils.Disposable;
 import com.jgoodies.binding.value.AbstractValueModel;
 
-public class VHolder<T> extends AbstractValueModel {
+public class VHolder<T> extends AbstractValueModel implements Disposable {
 	private static final long serialVersionUID = -2498301504320535336L;
 
 	/**
@@ -36,8 +39,7 @@ public class VHolder<T> extends AbstractValueModel {
 	 * old and new value are compared using {@code #equals} when firing value change
 	 * events.
 	 *
-	 * @param initialValue
-	 *            the initial value
+	 * @param initialValue the initial value
 	 */
 	public VHolder(T initialValue) {
 		this(initialValue, false);
@@ -46,11 +48,9 @@ public class VHolder<T> extends AbstractValueModel {
 	/**
 	 * Constructs a {@code ValueHolder} with the given initial value.
 	 *
-	 * @param initialValue
-	 *            the initial value
-	 * @param checkIdentity
-	 *            true to compare the old and new value using {@code ==}, false to
-	 *            use {@code #equals}
+	 * @param initialValue  the initial value
+	 * @param checkIdentity true to compare the old and new value using {@code ==},
+	 *                      false to use {@code #equals}
 	 */
 	public VHolder(T initialValue, boolean checkIdentity) {
 		value = initialValue;
@@ -75,8 +75,7 @@ public class VHolder<T> extends AbstractValueModel {
 	 * answers {@code true}. The values are compared with {@code #equals} if the
 	 * identity check is disabled.
 	 *
-	 * @param newValue
-	 *            the new value
+	 * @param newValue the new value
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -104,9 +103,8 @@ public class VHolder<T> extends AbstractValueModel {
 	 * this default setting by changing a value via
 	 * {@code #setValue(Object, boolean)}.
 	 *
-	 * @param checkIdentity
-	 *            true to compare the old and new value using {@code ==}, false to
-	 *            use {@code #equals}
+	 * @param checkIdentity true to compare the old and new value using {@code ==},
+	 *                      false to use {@code #equals}
 	 */
 	public void setIdentityCheckEnabled(boolean checkIdentity) {
 		this.checkIdentity = checkIdentity;
@@ -122,11 +120,9 @@ public class VHolder<T> extends AbstractValueModel {
 	 * Unlike general bean property setters, this method does not fire an event if
 	 * the old and new value are {@code null}.
 	 *
-	 * @param newValue
-	 *            the new value
-	 * @param checkIdentity
-	 *            true to compare the old and new value using {@code ==}, false to
-	 *            use {@code #equals}
+	 * @param newValue      the new value
+	 * @param checkIdentity true to compare the old and new value using {@code ==},
+	 *                      false to use {@code #equals}
 	 */
 	public void setValue(T newValue, boolean checkIdentity) {
 		Object oldValue = getValue();
@@ -137,4 +133,9 @@ public class VHolder<T> extends AbstractValueModel {
 		fireValueChange(oldValue, newValue, checkIdentity);
 	}
 
+	@Override
+	public void dispose() {
+		Arrays.asList(getPropertyChangeListeners()).forEach(x -> removePropertyChangeListener(x));
+		Arrays.asList(getVetoableChangeListeners()).forEach(x -> removeVetoableChangeListener(x));
+	}
 }

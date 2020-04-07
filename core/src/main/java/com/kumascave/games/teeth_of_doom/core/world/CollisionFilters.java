@@ -28,16 +28,15 @@ public abstract class CollisionFilters {
 	public static final short MOB_CATEGORY_BASE = 8;
 	// Active Weapons, swinging swords, etc
 	public static final short WEAPON_CATEGORY_BASE = 16;
+	// Needs to be in every non Sensor Mask
+	public static final short SENSOR_CATEGORY_BASE = 32;
 
-	// public static final short PROJECTILE_CATEGORY_BASE = 32;
-
+	public static final short SENSOR_CATEGORY = BASE_CATEGORY | SENSOR_CATEGORY_BASE;
 	public static final short BIG_CATEGORY = BASE_CATEGORY | BIG_CATEGORY_BASE;
 	public static final short GROUND_CATEGORY = BASE_CATEGORY | GROUND_CATEGORY_BASE;
 	public static final short MOB_CATEGORY = BASE_CATEGORY | MOB_CATEGORY_BASE;
 	public static final short ALL_CATEGORY = BASE_CATEGORY | BIG_CATEGORY_BASE | GROUND_CATEGORY_BASE
 			| MOB_CATEGORY_BASE | WEAPON_CATEGORY_BASE;
-
-	public static final short ITEM_COLLECTOR_CATEGORY = BIG_CATEGORY_BASE;
 
 	// public static final short PROJECTILE_CATEGORY = BASE_CATEGORY |
 	// PROJECTILE_CATEGORY_BASE;
@@ -48,13 +47,15 @@ public abstract class CollisionFilters {
 
 	public static final short COLLISION_DEACTIVATED_MASK = 0;
 
-	public static final short MOB_MASK = BIG_CATEGORY_BASE | MOB_CATEGORY_BASE | WEAPON_CATEGORY_BASE;
+	public static final short MOB_MASK = SENSOR_CATEGORY_BASE | BIG_CATEGORY_BASE | MOB_CATEGORY_BASE
+			| WEAPON_CATEGORY_BASE;
 
-	public static final short SMALL_ITEM_MASK = BIG_CATEGORY_BASE;
+	public static final short SMALL_ITEM_MASK = SENSOR_CATEGORY_BASE | BIG_CATEGORY_BASE;
 
 	public static final short ITEM_COLLECTOR_MASK = GROUND_CATEGORY_BASE;
 
-	public static final short WEAPON_MASK = BIG_CATEGORY_BASE | MOB_CATEGORY_BASE | WEAPON_CATEGORY_BASE;
+	public static final short WEAPON_MASK = SENSOR_CATEGORY_BASE | BIG_CATEGORY_BASE | MOB_CATEGORY_BASE
+			| WEAPON_CATEGORY_BASE;
 
 	// -----------------Group bits---------------------
 

@@ -23,6 +23,7 @@ import com.kumascave.games.teeth_of_doom.core.mechanics.spawn.Spawnpoint;
 import com.kumascave.games.teeth_of_doom.core.physics.Pose;
 import com.kumascave.games.teeth_of_doom.core.physics.WorldUtil;
 import com.kumascave.games.teeth_of_doom.util.DynamicVariables;
+import com.kumascave.games.teeth_of_doom.util.gif.FrameMemory;
 
 import lombok.Getter;
 
@@ -103,6 +104,7 @@ public class GameScreen implements Screen {
 		if (disposing) {
 			return;
 		}
+
 		GameContext.getGameStage().draw();
 		if (DynamicVariables.debugWorld.getValue()) {
 			WorldUtil.render();
@@ -111,9 +113,12 @@ public class GameScreen implements Screen {
 			System.out.println("Mouse at: " + GameContext.getMousePosition());
 		}
 		GameContext.getHudStage().draw();
+
 		if (!DynamicVariables.pause.getValue()) {
 			WorldUtil.worldStep();
 		}
+
+		FrameMemory.act(delta);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class CreepMelee extends ObservedArea {
 	public CreepMelee(Mob mob) {
 		super(mob, new Rectangle(Creep.meleeRange, Creep.meleeRange,
 				new Vector2(Creep.radius + Creep.meleeRange / 2f, 0f), 0f));
-		fixtureDef.filter.categoryBits = CollisionFilters.BASE_CATEGORY;
+		fixtureDef.filter.categoryBits = CollisionFilters.SENSOR_CATEGORY;
 		fixtureDef.filter.maskBits = CollisionFilters.MOB_CATEGORY_BASE;
 		image = new BlendingImage(FirstGame.gameSkin, "red");
 		image.setAlign(Align.center);

@@ -23,6 +23,7 @@ import com.kumascave.games.teeth_of_doom.core.world.CPos;
 import com.kumascave.games.teeth_of_doom.core.world.CollisionMap;
 import com.kumascave.games.teeth_of_doom.core.world.LayeredStage;
 import com.kumascave.games.teeth_of_doom.screens.GameScreen;
+import com.kumascave.games.teeth_of_doom.util.gif.FrameMemory;
 import com.kumascave.games.teeth_of_doom.util.jgoodies.VHolder;
 
 import lombok.Setter;
@@ -125,6 +126,7 @@ public class GameContext implements Disposable {
 			gameStage.dispose();
 		}
 		gameStage = null;
+		FrameMemory.dispose();
 		player = null;
 		mother = null;
 		hudStage.dispose();

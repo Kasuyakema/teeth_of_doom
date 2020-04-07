@@ -1,5 +1,7 @@
 package com.kumascave.games.teeth_of_doom.core.mechanics.spawn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.badlogic.gdx.Gdx;
@@ -15,9 +17,14 @@ public class Spawnpoint<M extends Mob> extends RepeatingAction {
 
 	public Spawnpoint(float cooldown, Supplier<M> supplier, float radius) {
 		super(cooldown, () -> {
+			List<Mob> mobs = new ArrayList<>();
 			int groupsize = GameContext.RANDOM.nextInt(HuntDirector.getGroupSize()) + 1;
-			Util.callXTimes(groupsize, () -> spawn(supplier.get(), radius));
-			HuntDirector.addSpawned(groupsize);
+			Util.callXTimes(groupsize, () -> {
+				Mob mob = supplier.get();
+				mobs.add(mob);
+				spawn(mob, radius);
+			});
+			HuntDirector.addSpawned(mobs);
 		});
 		setAwake(GameContext.getHuntOngoing().getValue());
 		HuntDirector.registerSpawnpoint(this);

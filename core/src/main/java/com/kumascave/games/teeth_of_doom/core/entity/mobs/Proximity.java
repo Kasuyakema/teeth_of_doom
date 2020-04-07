@@ -18,7 +18,7 @@ public class Proximity extends ObservedArea {
 	public Proximity(Mob mob) {
 		super(mob, new Circle(3.0f));
 
-		fixtureDef.filter.categoryBits = CollisionFilters.BASE_CATEGORY;
+		fixtureDef.filter.categoryBits = CollisionFilters.SENSOR_CATEGORY;
 		fixtureDef.filter.maskBits = CollisionFilters.MOB_CATEGORY_BASE;
 	}
 

@@ -1,8 +1,12 @@
 package com.kumascave.games.teeth_of_doom.util;
 
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import com.badlogic.gdx.utils.Array;
 
 public abstract class Util {
 
@@ -20,5 +24,9 @@ public abstract class Util {
 
 	public static void iterate(int max, BiConsumer<Integer, Integer> func) {
 		iterate(max, max, func);
+	}
+
+	public static <X> Stream<X> toStream(Array<X> array) {
+		return Arrays.stream(array.toArray());
 	}
 }

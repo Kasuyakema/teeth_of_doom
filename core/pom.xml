@@ -31,30 +31,35 @@
 			<version>27.0.1-jre</version>
 		</dependency>
 		<dependency>
-   			<groupId>com.esotericsoftware</groupId>
- 		  	<artifactId>kryo</artifactId>
-  		 	<version>5.0.0-RC4</version>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>kryo</artifactId>
+			<version>5.0.0-RC4</version>
 		</dependency>
 		<dependency>
-    		<groupId>de.javakaffee</groupId>
-    		<artifactId>kryo-serializers</artifactId>
-    		<version>0.45</version>
+			<groupId>de.javakaffee</groupId>
+			<artifactId>kryo-serializers</artifactId>
+			<version>0.45</version>
 		</dependency>
 		<dependency>
-    		<groupId>com.jgoodies</groupId>
-    		<artifactId>jgoodies-common</artifactId>
-    		<version>1.8.1</version>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-common</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.jgoodies</groupId>
-		    <artifactId>jgoodies-binding</artifactId>
-		    <version>2.13.0</version>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-binding</artifactId>
+			<version>2.13.0</version>
 		</dependency>
 		<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<version>4.13</version>
-   		 	<scope>test</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>gifencoder</artifactId>
+			<version>0.10.1</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -70,7 +70,7 @@ public class Player extends Human {
 			hand.getEquippedObject().use();
 			return;
 		}
-		hand.release();
+		hand.switchState(HandState.EMPTY);
 
 	}
 
@@ -83,9 +83,9 @@ public class Player extends Human {
 	@Override
 	protected void onDeath() {
 		// ToDo: Death message
+		super.onDeath();
 		AppContext.inst().getGame().setScreen(new TitleScreen());
 		GameContext.inst().dispose();
-		super.onDeath();
 	}
 
 }

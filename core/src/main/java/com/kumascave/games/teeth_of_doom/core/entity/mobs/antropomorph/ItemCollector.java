@@ -24,7 +24,7 @@ public class ItemCollector implements ContactResolving {
 		fixtureDef = new FixtureDef();
 		fixtureDef.shape = new Circle(owner.getComponents().get(0).getWidth() * 0.75f);
 		fixtureDef.isSensor = true;
-		fixtureDef.filter.categoryBits = CollisionFilters.ITEM_COLLECTOR_CATEGORY;
+		fixtureDef.filter.categoryBits = CollisionFilters.SENSOR_CATEGORY;
 		fixtureDef.filter.maskBits = CollisionFilters.ITEM_COLLECTOR_MASK;
 	}
 
