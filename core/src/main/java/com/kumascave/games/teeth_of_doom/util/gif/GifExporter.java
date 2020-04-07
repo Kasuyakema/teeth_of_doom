@@ -1,11 +1,12 @@
 package com.kumascave.games.teeth_of_doom.util.gif;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.zip.Deflater;
 
@@ -14,11 +15,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.kumascave.games.teeth_of_doom.util.DynamicVariables;
-import com.squareup.gifencoder.DisposalMethod;
-import com.squareup.gifencoder.FloydSteinbergDitherer;
-import com.squareup.gifencoder.GifEncoder;
-import com.squareup.gifencoder.ImageOptions;
-import com.squareup.gifencoder.UniformQuantizer;
 
 public class GifExporter {
 
@@ -34,17 +30,17 @@ public class GifExporter {
 			try (OutputStream outputStream = new FileOutputStream(Gdx.files.external("/tmp/mygif.gif").file())) {
 				List<Pixmap> frames = FrameMemory.getFrames();
 
-				ImageOptions options = new ImageOptions();
-				options.setDitherer(FloydSteinbergDitherer.INSTANCE);
-				options.setColorQuantizer(UniformQuantizer.INSTANCE);
-				options.setDisposalMethod(DisposalMethod.UNSPECIFIED);
-				options.setDelay((long) (1f / DynamicVariables.frameMemoryRate * 1000f), TimeUnit.MILLISECONDS);
-
-				GifEncoder encoder = new GifEncoder(outputStream, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0);
-
 				int width = Gdx.graphics.getWidth();
 				int height = Gdx.graphics.getHeight();
-				int[][] pixels = new int[height][width];
+
+				AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+				encoder.setFrameRate(DynamicVariables.frameMemoryRate);
+				encoder.setSize(width, height);
+				encoder.setRepeat(0);
+
+				encoder.start(outputStream);
+
+				int[] pixels = new int[height * width];
 
 				long prep = System.currentTimeMillis() - start;
 				System.out.println("prep: " + prep);
@@ -63,21 +59,21 @@ public class GifExporter {
 
 							pixel = (a << 24) + (r << 16) + (g << 8) + b; // ARGB
 
-							pixels[y][x] = pixel;
+							pixels[y * width + x] = pixel;
 						}
 					}
 
-//					BufferedImage image = new BufferedImage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
-//							BufferedImage.TYPE_INT_ARGB);
-//					final int[] a = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-//					System.arraycopy(pixels, 0, a, 0, pixels.length);
+					BufferedImage image = new BufferedImage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
+							BufferedImage.TYPE_INT_ARGB);
+					final int[] a = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+					System.arraycopy(pixels, 0, a, 0, pixels.length);
 
-					encoder.addImage(pixels, options);
+					encoder.addFrame(image);
 					ts.add(System.currentTimeMillis() - t);
 				}
 
 				long enc = System.currentTimeMillis();
-				encoder.finishEncoding();
+				encoder.finish();
 				System.out.println("enc: " + (System.currentTimeMillis() - enc));
 				Double avg = ts.stream().collect(Collectors.averagingLong(x -> x));
 				System.out.println("Gif done in " + (System.currentTimeMillis() - start) + "ms " + frames.size()
